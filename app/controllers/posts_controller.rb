@@ -4,8 +4,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    Post.create(content: params[:content])
-    redirect_to action: :index
+    # ①変数postを設定。投稿を作成した時に、「checked: false」で未読状態にしておく
+    post = Post.create(content: params[:content], checked: false)
+    # ②Ajaxを実現するために、postテーブルに収納されている変数postをjsonで返す。
+    render json:{ post: post }
   end
 
   def checked
